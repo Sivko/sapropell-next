@@ -6,7 +6,7 @@ export default function Header() {
     <div className="mx-content pt-4">
       <div className="flex items-center justify-between">
         <nav className="flex items-center">
-          <div className="flex items-center gap-2 w-[250px]">
+          <div className="flex items-center gap-2 w-60">
             <Icon icon="guidance:garden" className="text-xl" />
             <span>Волга</span>
           </div>
@@ -16,7 +16,7 @@ export default function Header() {
               className="flex items-center gap-2 rounded-2xl bg-brand py-1 px-2"
             >
               <span>Главная</span>
-              <div className="p-1 bg-white rounded-full w-[28px] h-[28px]">
+              <div className="p-1 bg-white rounded-full w-7 h-7">
                 <Icon icon="mdi-light:home" className="text-xl" />
               </div>
             </Link>
@@ -26,7 +26,7 @@ export default function Header() {
               href="/"
               className="flex items-center gap-2 rounded-2xl bg-gray-300 py-1 px-2"
             >
-              <div className="p-1 bg-white rounded-full w-[28px] h-[28px]">
+              <div className="p-1 bg-white rounded-full w-7 h-7">
                 <Icon icon="mdi-light:home" className="text-xl" />
               </div>
               <span>Главная</span>

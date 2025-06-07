@@ -10,7 +10,7 @@ import { FreeMode, Pagination } from 'swiper/modules';
 
 export default function Slider() {
 
-  const Item = ()=>(<div className="bg-red-300 w-full h-[200px]" />)
+  const Item = ()=>(<div className="bg-red-300 w-full h-60" />)
   return (
     <div className="">
       <Swiper

@@ -28,21 +28,31 @@ export default function Cursor() {
     };
   }, []);
 
+  const spring = {
+    type: "spring",
+    damping: 10,
+    stiffness: 100,
+  };
+
   const variants = {
     default: {
       x: mousePosition.x - 8,
       y: mousePosition.y - 8,
+      borderRadius: "50%",
       transition: {
         duration: 0.1,
       },
     },
     text: {
       height: 150,
-      width: 150,
-      x: mousePosition.x - 70,
+      width: 10,
+      x: mousePosition.x - 5,
       y: mousePosition.y - 70,
-      backgroundColor: "aqua",
-      mixBlendMode: "difference",
+      borderRadius: 0,
+      transition: { spring },
+      // animate: { opacity: 0 },
+      // backgroundColor: "aqua",
+      // mixBlendMode: "difference",
     },
   };
 
@@ -51,6 +61,8 @@ export default function Cursor() {
       className="cursor"
       variants={variants}
       animate={store.state.cursor}
-    ></motion.div>
+    >
+      {store.state.cursor && <span>{store.state.cursorText}</span>}
+    </motion.div>
   );
 }
