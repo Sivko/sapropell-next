@@ -1,5 +1,9 @@
-import MainSection from "@/sections/main-section";
+import Sections from "@/sections";
 
 export default function Home() {
-  return <MainSection />;
+  return (
+    <>
+      <Sections />
+    </>
+  );
 }

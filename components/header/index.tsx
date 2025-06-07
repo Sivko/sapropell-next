@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 export default function Header() {
   return (
-    <div className="container mx-auto">
+    <div className="mx-content pt-4">
       <div className="flex items-center justify-between">
         <nav className="flex items-center">
           <div className="flex items-center gap-2 w-[250px]">

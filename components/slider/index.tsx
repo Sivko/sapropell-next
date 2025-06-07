@@ -14,9 +14,9 @@ export default function Slider() {
   return (
     <div className="">
       <Swiper
-        slidesPerView={3}
+        slidesPerView={1.2}
         spaceBetween={30}
-        freeMode={true}
+        loop={true}
         pagination={{
           clickable: true,
         }}
