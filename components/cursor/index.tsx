@@ -45,24 +45,31 @@ export default function Cursor() {
     },
     text: {
       height: 150,
+      width: 150,
+      x: mousePosition.x - 75,
+      y: mousePosition.y - 75,
+      borderRadius: "50%",
+      transition: {
+        duration: 0.1,
+      },
+    },
+    carriage: {
+      height: 150,
       width: 10,
       x: mousePosition.x - 5,
       y: mousePosition.y - 70,
       borderRadius: 0,
       transition: { spring },
-      // animate: { opacity: 0 },
-      // backgroundColor: "aqua",
-      // mixBlendMode: "difference",
     },
   };
 
   return (
     <motion.div
-      className="cursor"
+      className="cursor flex items-center justify-center"
       variants={variants}
       animate={store.state.cursor}
     >
-      {store.state.cursor && <span>{store.state.cursorText}</span>}
+      {store.state.cursor && <span className="text-white">{store.state.cursorText}</span>}
     </motion.div>
   );
 }

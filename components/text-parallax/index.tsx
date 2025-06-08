@@ -23,7 +23,7 @@ export default function TextParallaxSection() {
   }, []);
 
   const onEnter = () => {
-    updateCursor("text");
+    updateCursor("carriage");
   };
 
   const onLeave = () => {
@@ -31,7 +31,7 @@ export default function TextParallaxSection() {
   };
 
   return (
-    <div className="overflow-hidden my-20" onMouseEnter={onEnter} onMouseLeave={onLeave}>
+    <div className="overflow-hidden my-10" onMouseEnter={onEnter} onMouseLeave={onLeave}>
       <div  ref={container}>
         <div className="border-b border-gray-300">
           <Slide direction={"left"} left={"-40%"} progress={scrollYProgress}>

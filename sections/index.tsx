@@ -3,6 +3,7 @@ import MainSection from "./main-section";
 import InfoSection from "./info-section";
 import Header from "@/components/header";
 import Slider from "@/components/slider";
+import Footer from "@/components/footer";
 
 export default function Sections() {
   return (
@@ -12,6 +13,7 @@ export default function Sections() {
       <Slider />
       <TextParallaxSection />
       <InfoSection />
+      <Footer />
     </div>
   );
 }
