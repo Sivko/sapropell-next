@@ -22,7 +22,6 @@ export const updateCursor = (cursor: TStore["cursor"], cursorText?: TStore["curs
   })
 } 
 
-
 export const addModal = (modal: React.ReactNode) => {
   store.setState((state) => ({
     ...state,

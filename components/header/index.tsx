@@ -1,41 +1,60 @@
+"use client";
+
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { motion } from "framer-motion";
 
 export default function Header() {
+  const animateObject = {
+    initial: { opacity: 0, y: -100 },
+    animate: {
+      opacity: 1,
+      y: 0,
+    },
+    transition: { duration: 1 },
+  };
   return (
     <div className="mx-content pt-4">
       <div className="flex items-center justify-between">
         <nav className="flex items-center">
-          <div className="flex items-center gap-2 w-60">
+          <motion.div
+            className="flex items-center gap-2 w-60"
+            {...animateObject}
+          >
             <Icon icon="guidance:garden" className="text-xl" />
             <span>Волга</span>
-          </div>
+          </motion.div>
           <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              className="flex items-center gap-2 rounded-2xl bg-brand py-1 px-2"
-            >
-              <span>Главная</span>
-              <div className="p-1 bg-white rounded-full w-7 h-7">
-                <Icon icon="mdi-light:home" className="text-xl" />
-              </div>
+            <Link href="/" className="">
+              <motion.div
+                className="flex items-center gap-2 rounded-2xl bg-brand py-1 px-2"
+                {...animateObject}
+              >
+                <span>Главная</span>
+                <div className="p-1 bg-white rounded-full w-7 h-7">
+                  <Icon icon="mdi-light:home" className="text-xl" />
+                </div>
+              </motion.div>
             </Link>
-            {/* <Link href="#about">About</Link> */}
-            {/* <Link href="/">Contact</Link> */}
-            <Link
-              href="/"
-              className="flex items-center gap-2 rounded-2xl bg-gray-300 py-1 px-2"
-            >
-              <div className="p-1 bg-white rounded-full w-7 h-7">
-                <Icon icon="mdi-light:home" className="text-xl" />
-              </div>
-              <span>Главная</span>
+            <Link href="/" className="">
+              <motion.div
+                className="flex items-center gap-2 rounded-2xl bg-gray-300 py-1 px-2"
+                {...animateObject}
+              >
+                <div className="p-1 bg-white rounded-full w-7 h-7">
+                  <Icon icon="mdi-light:home" className="text-xl" />
+                </div>
+                <span>Главная</span>
+              </motion.div>
             </Link>
           </div>
         </nav>
-        <button className="bg-primary text-white rounded-2xl p-2">
+        <motion.button
+          {...animateObject}
+          className="bg-primary text-white rounded-2xl p-2"
+        >
           Связаться
-        </button>
+        </motion.button>
       </div>
     </div>
   );

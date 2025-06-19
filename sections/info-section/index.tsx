@@ -4,6 +4,8 @@ import TextCircly from "@/components/text-circly";
 import Pagination from "./Pagination";
 import { useState } from "react";
 import { TSliderInfo } from "@/types/sliders";
+import ContentModal from "@/modals/content-modal";
+import { addModal } from "@/tanstack-client";
 
 export default function InfoSection() {
   const [activeSlider, setActiveSlider] = useState<number>(0);
@@ -20,8 +22,8 @@ export default function InfoSection() {
   ];
   return (
     <div className="flex mx-content">
-      <div className="flex flex-col justify-between shrink-0">
-        <TextCircly />
+      <div className="">
+        <TextCircly text={"натуральные  компоненты  "} />
         logotype
       </div>
       <div className="flex-1 grid grid-cols-2 gap-6">
@@ -29,22 +31,28 @@ export default function InfoSection() {
           className="relative rounded-2xl bg-cover"
           style={{ backgroundImage: `url(${SLIDERS[activeSlider].images[0]})` }}
         >
-          <div className="rounded-2xl bg-white p-4 absolute top-0 w-fit flex items-end rounded-t-none rounded-l-none">
-            <div className="text-2xl font-medium">
-              Узнать
-              <br />
-              больше
+          <div className="absolute top-0">
+            <div className="realtive p-4 rounded-2xl bg-white w-fit flex items-end rounded-t-none rounded-l-none nebo nebo--br card--cat1">
+              <div
+                className="text-2xl font-medium pr-10"
+                onClick={() => addModal(<ContentModal />)}
+              >
+                Узнать
+                <br />
+                больше
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="w-6 h-6 rotate-90 flex-1 absolute bottom-0"
+              >
+                <path
+                  fill="currentColor"
+                  d="m16.289 7.208l-9.766 9.746q-.14.14-.344.13q-.204-.009-.345-.15t-.14-.334t.14-.334L15.582 6.5H6.789q-.213 0-.357-.144t-.143-.357t.143-.356t.357-.143h9.692q.343 0 .575.232t.233.576V16q0 .213-.145.356t-.356.144t-.356-.144t-.144-.356z"
+                />
+              </svg>
             </div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="w-6 h-6 rotate-90 flex-1"
-            >
-              <path
-                fill="currentColor"
-                d="m16.289 7.208l-9.766 9.746q-.14.14-.344.13q-.204-.009-.345-.15t-.14-.334t.14-.334L15.582 6.5H6.789q-.213 0-.357-.144t-.143-.357t.143-.356t.357-.143h9.692q.343 0 .575.232t.233.576V16q0 .213-.145.356t-.356.144t-.356-.144t-.144-.356z"
-              />
-            </svg>
+            <div className="h-16 p-4 w-20 bg-white nebo nebo--br card--cat2" />
           </div>
         </div>
         <div className="flex flex-col gap-6">
@@ -59,7 +67,9 @@ export default function InfoSection() {
             {SLIDERS[activeSlider].images.map((image, index) => (
               <div
                 key={index}
-                className={`h-20 rounded-2xl bg-cover bg-center ${index === 1 ? "col-span-2" : ""}`}
+                className={`h-20 rounded-2xl bg-cover bg-center ${
+                  index === 1 ? "col-span-2" : ""
+                }`}
                 style={{ backgroundImage: `url(${image})` }}
               />
             ))}

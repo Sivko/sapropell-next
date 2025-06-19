@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Cursor from "@/components/cursor";
+import Modals from "@/modals";
 import "./globals.css";
+import "./nebo.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +32,7 @@ export default function RootLayout({
       >
         <Cursor />
         {children}
+        <Modals />
       </body>
     </html>
   );

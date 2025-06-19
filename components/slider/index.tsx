@@ -1,5 +1,6 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
+import { motion } from "framer-motion";
 
 // Import Swiper styles
 import "swiper/css";
@@ -7,35 +8,111 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
 import { FreeMode, Pagination } from "swiper/modules";
-
-type TSlider = {
-  image: string;
-};
+import { useEffect, useRef, useState } from "react";
 
 export default function Slider() {
-  const SLIDERS: TSlider[] = [{ image: "images/slide_1.jpeg" },{ image: "images/slide_1.jpeg" },{ image: "images/slide_1.jpeg" }];
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const swiperRef = useRef<SwiperRef>(null);
+  const SLIDERS: Record<string, string>[] = [
+    {
+      image: "images/slide_1.jpeg",
+      text: "Сапропель — это природное органоминеральное удобрение, которое улучшает структуру почвы, насыщает её питательными веществами и способствует активному росту растений.",
+    },
+    {
+      image: "images/slide_2.jpeg",
+      text: "Богатый гуминовыми кислотами и микроэлементами, сапропель повышает плодородие почвы, ускоряет прорастание семян и улучшает приживаемость рассады.",
+    },
+    {
+      image: "images/slide_3.jpeg",
+      text: "Сапропель способствует восстановлению истощённой почвы, активизирует полезную микрофлору и делает питание растений более сбалансированным и доступным.",
+    },
+  ];
 
-  const Item = (props: TSlider) => (
-    <div className="w-full h-60 rounded-4xl ml-content" style={{backgroundImage: `url(${props.image})`}} />
-  );
+  // const Item = (props: TSlider) => (
+  //   <div
+  //     className="w-full h-60 rounded-4xl ml-content"
+  //     style={{ backgroundImage: `url(${props.image})` }}
+  //   />
+  // );
+
+  useEffect(() => {
+    if (!swiperRef.current?.swiper) return;
+    swiperRef.current.swiper.slideNext();
+  }, []);
+
   return (
     <div className="mt-10">
       <Swiper
+        ref={swiperRef}
         slidesPerView={1.2}
         spaceBetween={30}
         loop={true}
+        speed={2000}
         pagination={{
           clickable: true,
+        }}
+        onSlideChange={(e) => {
+          setActiveIndex(e.realIndex);
         }}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
       >
         {SLIDERS.map((slider, index) => (
           <SwiperSlide key={index}>
-            <Item {...slider} />
+            <Item {...slider} activeIndex={activeIndex} index={index} />
           </SwiperSlide>
         ))}
       </Swiper>
+    </div>
+  );
+}
+
+function Item({
+  index,
+  activeIndex,
+  image,
+  text,
+}: {
+  index: number;
+  activeIndex: number;
+  image: string;
+  text: string;
+}) {
+  const [isAnimate, setIsAnimate] = useState(false);
+
+  useEffect(() => {
+    if (index === activeIndex) {
+      setIsAnimate(true);
+    } else {
+      setIsAnimate(false);
+    }
+  }, [activeIndex, index]);
+
+  return (
+    <div className="w-full h-60 rounded-4xl ml-content relative overflow-hidden">
+      <motion.div
+        initial={{ scaleX: 1.1, scaleY: 1.1 }}
+        animate={
+          isAnimate ? { scaleX: 1, scaleY: 1 } : { scaleX: 1.1, scaleY: 1.1 }
+        }
+        transition={{
+          delay: 1,
+          duration: 1,
+        }}
+        style={{ originX: 0, originY: 0, backgroundImage: `url(${image})` }}
+        className="inset-0 absolute z-[-1] bg-no-repeat bg-cover"
+      />
+      <motion.div
+        className="rounded-tr-3xl bg-white max-w-sm p-4 absolute z-10 left-0 bottom-0"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={isAnimate ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
+        transition={{
+          delay: 1,
+          duration: 1,
+        }}
+      >
+        {text}
+      </motion.div>
     </div>
   );
 }

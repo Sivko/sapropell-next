@@ -1,27 +1,81 @@
 "use client";
-import { updateCursor } from "@/tanstack-client";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
-import Lenis from "lenis";
-import { useEffect, useRef } from "react";
 
-export default function TextParallaxSection() {
-  const container = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "end start"],
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useMotionValue,
+  useVelocity,
+  useAnimationFrame,
+} from "framer-motion";
+import { wrap } from "@motionone/utils";
+import { updateCursor } from "@/tanstack-client";
+
+interface ParallaxProps {
+  children: string;
+  baseVelocity: number;
+}
+
+function ParallaxText({ children, baseVelocity = 100 }: ParallaxProps) {
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+    clamp: false,
   });
 
-  useEffect(() => {
-    const lenis = new Lenis();
+  /**
+   * This is a magic wrapping for the length of the text - you
+   * have to replace for wrapping that works for you or dynamically
+   * calculate
+   */
+  const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+  const directionFactor = useRef<number>(1);
+  useAnimationFrame((t, delta) => {
+    let moveBy = directionFactor.current * baseVelocity * (delta / 5000);
+
+    /**
+     * This is what changes the direction of the scroll once we
+     * switch scrolling directions.
+     */
+    if (velocityFactor.get() < 0) {
+      directionFactor.current = -1;
+    } else if (velocityFactor.get() > 0) {
+      directionFactor.current = 1;
     }
 
-    requestAnimationFrame(raf);
-  }, []);
+    moveBy += directionFactor.current * moveBy * velocityFactor.get();
 
+    baseX.set(baseX.get() + moveBy);
+  });
+
+  /**
+   * The number of times to repeat the child text should be dynamically calculated
+   * based on the size of the text and viewport. Likewise, the x motion value is
+   * currently wrapped between -20 and -45% - this 25% is derived from the fact
+   * we have four children (100% / 4). This would also want deriving from the
+   * dynamically generated number of children.
+   */
+  return (
+    <div className="parallax mt-5">
+      <motion.div className="scroller" style={{ x }}>
+        <span>{children} </span>
+        <span>{children} </span>
+        <span>{children} </span>
+        <span>{children} </span>
+      </motion.div>
+    </div>
+  );
+}
+
+export default function TextParallax() {
   const onEnter = () => {
     updateCursor("carriage");
   };
@@ -29,69 +83,16 @@ export default function TextParallaxSection() {
   const onLeave = () => {
     updateCursor("default");
   };
-
   return (
-    <div className="overflow-hidden my-10" onMouseEnter={onEnter} onMouseLeave={onLeave}>
-      <div  ref={container}>
-        <div className="border-b border-gray-300">
-          <Slide direction={"left"} left={"-40%"} progress={scrollYProgress}>
-            <Text1 />
-          </Slide>
-        </div>
-        <div className="border-b border-gray-300">
-          <Slide direction={"right"} left={"-25%"} progress={scrollYProgress}>
-            <Text2 />
-          </Slide>
-        </div>
-        <div className="border-b border-gray-300">
-          <Slide direction={"left"} left={"-75%"} progress={scrollYProgress}>
-            <Text1 />
-          </Slide>
-        </div>
-      </div>
-    </div>
+    <section
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      className="my-10 text-7xl font-thin"
+    >
+      <ParallaxText baseVelocity={-5}>
+        Микроэлементы: N, P, K, Fe, Ca, Mg
+      </ParallaxText>
+      <ParallaxText baseVelocity={5}>Витамины: А, E, B2, В5, В12</ParallaxText>
+    </section>
   );
 }
-
-const Slide = (props: {
-  direction: string;
-  left: string;
-  progress: MotionValue<number>;
-  children: React.ReactNode;
-}) => {
-  const direction = props.direction == "left" ? -1 : 1;
-  const translateX = useTransform(
-    props.progress,
-    [0, 1],
-    [150 * direction, -150 * direction]
-  );
-  return (
-    <motion.div
-      style={{ x: translateX, left: props.left }}
-      className="relative flex whitespace-nowrap"
-    >
-      {props.children}
-    </motion.div>
-  );
-};
-
-const Text1 = () => (
-  <div className={"px-5 flex gap-10 items-center text-5xl font-thin"}>
-    <p className="">Микроэлементы: </p>
-    <p>N, P, K, Fe, Ca, Mg</p>
-    <p className="">Микроэлементы: </p>
-    <p>Mn, Br, B, Mo</p>
-    <p className="">Витамины: </p>
-    <p>А, E, B2, В5, В12</p>
-    <p className="">Микроэлементы: </p>
-    <p>N, P, K, Fe, Ca, Mg</p>
-  </div>
-);
-
-const Text2 = () => (
-  <div className={"px-5 flex gap-10 items-center text-5xl font-thin"}>
-    <p className="">Стимуляторы роста:</p>
-    <p>клетчатка, протеины, аминокислоты</p>
-    <p className="">Натуральный природный компонент сапропель.</p>
-  </div>
-);
