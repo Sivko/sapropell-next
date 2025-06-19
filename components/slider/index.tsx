@@ -91,16 +91,14 @@ function Item({
   return (
     <div className="w-full h-60 rounded-4xl ml-content relative overflow-hidden">
       <motion.div
-        initial={{ scaleX: 1.1, scaleY: 1.1 }}
-        animate={
-          isAnimate ? { scaleX: 1, scaleY: 1 } : { scaleX: 1.1, scaleY: 1.1 }
-        }
+        initial={{ scale: 1.2 }}
+        animate={isAnimate ? { scale: 1 } : { scale: 1.2 }}
         transition={{
           delay: 1,
           duration: 1,
         }}
         style={{ originX: 0, originY: 0, backgroundImage: `url(${image})` }}
-        className="inset-0 absolute z-[-1] bg-no-repeat bg-cover"
+        className="inset-0 absolute z-[-1] bg-no-repeat bg-cover bg-center origin-center"
       />
       <motion.div
         className="rounded-tr-3xl bg-white max-w-sm p-4 absolute z-10 left-0 bottom-0"

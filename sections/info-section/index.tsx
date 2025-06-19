@@ -4,8 +4,8 @@ import TextCircly from "@/components/text-circly";
 import Pagination from "./Pagination";
 import { useState } from "react";
 import { TSliderInfo } from "@/types/sliders";
-import ContentModal from "@/modals/content-modal";
-import { addModal } from "@/tanstack-client";
+import { motion } from "framer-motion";
+import ButtonShowMore from "@/components/button-show-more";
 
 export default function InfoSection() {
   const [activeSlider, setActiveSlider] = useState<number>(0);
@@ -21,40 +21,37 @@ export default function InfoSection() {
     },
   ];
   return (
-    <div className="flex mx-content">
+    <motion.div
+      className="flex mx-content"
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ amount: 0.8 }}
+    >
       <div className="">
         <TextCircly text={"натуральные  компоненты  "} />
         logotype
       </div>
       <div className="flex-1 grid grid-cols-2 gap-6">
-        <div
+        <motion.div
           className="relative rounded-2xl bg-cover"
+          variants={{
+            offscreen: {
+              opacity: 0,
+              scale: 0.1,
+            },
+            onscreen: {
+              opacity: 1,
+              scale: 1,
+              transition: {
+                type: "spring",
+                bounce: 0.4,
+              },
+            },
+          }}
           style={{ backgroundImage: `url(${SLIDERS[activeSlider].images[0]})` }}
         >
-          <div className="absolute top-0">
-            <div className="realtive p-4 rounded-2xl bg-white w-fit flex items-end rounded-t-none rounded-l-none nebo nebo--br card--cat1">
-              <div
-                className="text-2xl font-medium pr-10"
-                onClick={() => addModal(<ContentModal />)}
-              >
-                Узнать
-                <br />
-                больше
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="w-6 h-6 rotate-90 flex-1 absolute bottom-0"
-              >
-                <path
-                  fill="currentColor"
-                  d="m16.289 7.208l-9.766 9.746q-.14.14-.344.13q-.204-.009-.345-.15t-.14-.334t.14-.334L15.582 6.5H6.789q-.213 0-.357-.144t-.143-.357t.143-.356t.357-.143h9.692q.343 0 .575.232t.233.576V16q0 .213-.145.356t-.356.144t-.356-.144t-.144-.356z"
-                />
-              </svg>
-            </div>
-            <div className="h-16 p-4 w-20 bg-white nebo nebo--br card--cat2" />
-          </div>
-        </div>
+          <ButtonShowMore />
+        </motion.div>
         <div className="flex flex-col gap-6">
           <Pagination
             sliders={SLIDERS}
@@ -65,16 +62,48 @@ export default function InfoSection() {
             {/* <div className="bg-brand h-20 rounded-2xl" /> */}
             {/* <div className="bg-brand col-span-2 h-20  rounded-2xl" /> */}
             {SLIDERS[activeSlider].images.map((image, index) => (
-              <div
+              <motion.div
                 key={index}
                 className={`h-20 rounded-2xl bg-cover bg-center ${
                   index === 1 ? "col-span-2" : ""
                 }`}
                 style={{ backgroundImage: `url(${image})` }}
+                variants={{
+                  offscreen: {
+                    opacity: 0,
+                    scale: 0.1,
+                  },
+                  onscreen: {
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      delay: 0.3 + index / 10,
+                      type: "spring",
+                      bounce: 0.4,
+                    },
+                  },
+                }}
               />
             ))}
           </div>
-          <div className="bg-brand rounded-2xl p-4">
+          <motion.div
+            variants={{
+              offscreen: {
+                opacity: 0,
+                scale: 0.1,
+              },
+              onscreen: {
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  delay: 0.3,
+                  type: "spring",
+                  bounce: 0.4,
+                },
+              },
+            }}
+            className="bg-brand rounded-2xl p-4"
+          >
             <div className="text-2xl font-medium">80% lorem ingener</div>
             <div className="text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt,
@@ -82,13 +111,47 @@ export default function InfoSection() {
               molestias at a aut excepturi, laboriosam, modi fugit officia vel
               perferendis quidem explicabo doloremque.
             </div>
-          </div>
+          </motion.div>
           <div className="flex">
-            <div className="w-1/3 aspect-square rounded-full bg-brand" />
-            <div className="w-2/3 rounded-full bg-brand -ml-10" />
+            <motion.div
+              variants={{
+                offscreen: {
+                  opacity: 0,
+                  scale: 0.1,
+                },
+                onscreen: {
+                  opacity: 1,
+                  scale: 1,
+                  transition: {
+                    delay: 0.4,
+                    type: "spring",
+                    bounce: 0.4,
+                  },
+                },
+              }}
+              className="w-1/3 aspect-square rounded-full bg-brand"
+            />
+            <motion.div
+              variants={{
+                offscreen: {
+                  opacity: 0,
+                  scale: 0.1,
+                },
+                onscreen: {
+                  opacity: 1,
+                  scale: 1,
+                  transition: {
+                    delay: 0.45,
+                    type: "spring",
+                    bounce: 0.4,
+                  },
+                },
+              }}
+              className="w-2/3 rounded-full bg-brand -ml-10"
+            />
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

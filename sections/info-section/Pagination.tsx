@@ -2,6 +2,7 @@
 
 import { updateCursor } from "@/tanstack-client";
 import { TSliderInfo } from "@/types/sliders";
+import { motion } from "framer-motion";
 
 export default function Pagination({
   sliders,
@@ -23,7 +24,22 @@ export default function Pagination({
   return (
     <div className="flex justify-between gap-4">
       {Array.from({ length: sliders.length }).map((_, index) => (
-        <div
+        <motion.div
+          variants={{
+            offscreen: {
+              opacity: 0,
+              scale: 0.1,
+            },
+            onscreen: {
+              opacity: 1,
+              scale: 1,
+              transition: {
+                delay: 0.3 + index / 10,
+                type: "spring",
+                bounce: 0.4,
+              },
+            },
+          }}
           key={index}
           className="flex-1 flex items-end gap-2"
           onClick={() => setActiveSlider(index)}
@@ -38,7 +54,7 @@ export default function Pagination({
           {index == activeSlider && (
             <div className="text-2xl leading-4">0{index + 1}</div>
           )}
-        </div>
+        </motion.div>
       ))}
     </div>
   );

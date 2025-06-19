@@ -29,30 +29,23 @@ const CircularText = ({ text = "", spinDuration = 20, className = "" }) => {
 
   const start = rotation.get();
   return (
-    <motion.div
-      className="relative bg-brand rounded-full"
-      initial="offscreen"
-      whileInView="onscreen"
-      viewport={{ amount: 0.8 }}
-    >
+    <div className="relative bg-brand rounded-full">
       <motion.div
         className={`circular-text ${className}`}
         // style={{ rotate: rotation }}
-        variants={
-          {
-            offscreen: {
-              opacity: 0,
-              rotate: 0,
-              scale: .1,
-            },
-            onscreen: {
-              transition: getTransition(spinDuration, start),
-              scale: 1,
-              opacity: 1,
-              rotate: start + 360,
-            },
-          }
-        }
+        variants={{
+          offscreen: {
+            opacity: 0,
+            rotate: 0,
+            scale: 0.1,
+          },
+          onscreen: {
+            transition: getTransition(spinDuration, start),
+            scale: 1,
+            opacity: 1,
+            rotate: start + 360,
+          },
+        }}
       >
         {letters.map((letter, i) => {
           const rotationDeg = (360 / letters.length) * i;
@@ -85,7 +78,7 @@ const CircularText = ({ text = "", spinDuration = 20, className = "" }) => {
           />
         </svg>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
