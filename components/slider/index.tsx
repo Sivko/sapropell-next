@@ -4,11 +4,8 @@ import { motion } from "framer-motion";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-
-import { FreeMode, Pagination } from "swiper/modules";
 import { useEffect, useRef, useState } from "react";
+import { updateCursor } from "@/tanstack-client";
 
 export default function Slider() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -54,7 +51,6 @@ export default function Slider() {
         onSlideChange={(e) => {
           setActiveIndex(e.realIndex);
         }}
-        modules={[FreeMode, Pagination]}
         className="mySwiper"
       >
         {SLIDERS.map((slider, index) => (
@@ -62,6 +58,20 @@ export default function Slider() {
             <Item {...slider} activeIndex={activeIndex} index={index} />
           </SwiperSlide>
         ))}
+        <div className="absolute inset-0 z-10 flex justify-between">
+          <div
+            className="w-1/4 pointer-events-auto"
+            onMouseEnter={() => updateCursor("text", "<")}
+            onMouseLeave={() => updateCursor("default")}
+            onClick={() => swiperRef.current?.swiper.slidePrev()}
+          />
+          <div
+            className="w-1/4 pointer-events-auto"
+            onMouseEnter={() => updateCursor("text", ">")}
+            onMouseLeave={() => updateCursor("default")}
+            onClick={() => swiperRef.current?.swiper.slideNext()}
+          />
+        </div>
       </Swiper>
     </div>
   );

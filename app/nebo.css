@@ -109,8 +109,8 @@
 
 .card--cat1 {
   --nb-w: 1rem;
-  --nb-r: 1rem;
-  --nb-h: 4rem;
+  --nb-r: 2rem;
+  --nb-h: 1px;
 }
 
 .card--cat2 {
