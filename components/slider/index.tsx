@@ -10,7 +10,7 @@ import { updateCursor } from "@/tanstack-client";
 export default function Slider() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const swiperRef = useRef<SwiperRef>(null);
-  const SLIDERS: Record<string, string>[] = [
+  const SLIDERS: { image: string; text: string }[] = [
     {
       image: "images/slide_1.jpeg",
       text: "Сапропель — это природное органоминеральное удобрение, которое улучшает структуру почвы, насыщает её питательными веществами и способствует активному росту растений.",
