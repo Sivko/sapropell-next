@@ -34,6 +34,7 @@ export default function LanguageSwitcher() {
           }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          disabled={locale === lang.code}
         >
           <span>{lang.flag}</span>
           <span className="text-sm">{lang.name}</span>

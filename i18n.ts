@@ -1,16 +1,25 @@
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-import ru from './messages/ru.json';
-import zh from './messages/zh.json';
-// Can be imported from a shared config
-const locales = ['ru', 'zh'];
+import { Locale } from './types/messages';
+import { locales, defaultLocale } from './lib/locales';
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid
-  if (!locale || !locales.includes(locale as any)) notFound();
+  console.log("locale", locale);
+  
+  // Use default locale if locale is undefined
+  const validLocale = locale || defaultLocale;
+  
+  if (!validLocale || !locales.includes(validLocale as Locale)) {
+    console.log("Invalid locale, using default:", defaultLocale);
+    return {
+      locale: defaultLocale,
+      messages: (await import(`./messages/${defaultLocale}.json`)).default
+    };
+  }
 
   return {
-    locale,
-    messages: locale === 'ru' ? ru : zh
+    locale: validLocale,
+    messages: (await import(`./messages/${validLocale}.json`)).default
   };
 });
