@@ -23,11 +23,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        {/* <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages}>
           <Cursor />
           {children}
           <Modals />
-        </NextIntlClientProvider> */}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
