@@ -1,0 +1,24 @@
+{
+  "header": {
+    "logo": "伏尔加",
+    "home": "首页",
+    "contact": "联系我们"
+  },
+  "main": {
+    "logo": "伏尔加",
+    "title": "天然独特成分",
+    "subtitle": "腐泥 - 肥料"
+  },
+  "parallax": {
+    "microelements": "微量元素: N, P, K, Fe, Ca, Mg",
+    "vitamins": "维生素: A, E, B2, B5, B12"
+  },
+  "info": {
+    "naturalComponents": "天然成分",
+    "percentage": "80% lorem ingener",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, temporibus rem esse laboriosam cupiditate similique."
+  },
+  "footer": {
+    "text": "页脚"
+  }
+}

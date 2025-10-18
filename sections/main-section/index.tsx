@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from 'next-intl';
 
 export default function MainSection() {
+  const t = useTranslations('main');
+  
   return (
     <div className="mt-20">
       <div className="mx-content">
@@ -13,11 +16,11 @@ export default function MainSection() {
             animate={{ opacity: 1, scale: 1 }}
           >
             <div className="bg-green-300 w-7 h-7 rounded-full" />
-            <span>Волга</span>
+            <span>{t('logo')}</span>
           </motion.div>
           <div className="flex-1">
             <h1 className="text-7xl font-light relative">
-              {"Натуральный уникальный компонент".split("").map((el, i) => (
+              {t('title').split("").map((el, i) => (
                 <motion.span
                   className="inline-block"
                   initial={{ opacity: 0, y: 100 }}
@@ -45,9 +48,9 @@ export default function MainSection() {
                   bounce: 0.4,
                 }}
               >
-                сапропель
+                {t('subtitle').split(' - ')[0]}
               </motion.div>
-              {"сапропель - удобрение".split("").map((el, i) => (
+              {t('subtitle').split("").map((el, i) => (
                 <motion.span
                   className="inline-block"
                   initial={{ opacity: 0, y: 100 }}

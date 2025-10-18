@@ -6,6 +6,7 @@ import ButtonShowMore from "@/components/button-show-more";
 import { useState } from "react";
 import { TSliderInfo } from "@/types/sliders";
 import { motion } from "framer-motion";
+import { useTranslations } from 'next-intl';
 
 const getMotionVariants = (delay = 0) => ({
   offscreen: { opacity: 0, scale: 0.1 },
@@ -17,6 +18,7 @@ const getMotionVariants = (delay = 0) => ({
 });
 
 export default function InfoSection() {
+  const t = useTranslations('info');
   const [activeSlider, setActiveSlider] = useState(0);
 
   const SLIDERS: TSliderInfo[] = [
@@ -41,7 +43,7 @@ export default function InfoSection() {
       viewport={{ amount: 0.8 }}
     >
       <div>
-        <TextCircly text="натуральные  компоненты  " />
+        <TextCircly text={t('naturalComponents')} />
         logotype
       </div>
 
@@ -78,10 +80,9 @@ export default function InfoSection() {
             className="bg-brand rounded-2xl p-4"
             variants={getMotionVariants(0.3)}
           >
-            <div className="text-2xl font-medium">80% lorem ingener</div>
+            <div className="text-2xl font-medium">{t('percentage')}</div>
             <div className="text-sm">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt,
-              temporibus rem esse laboriosam cupiditate similique.
+              {t('description')}
             </div>
           </motion.div>
 

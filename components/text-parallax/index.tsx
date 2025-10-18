@@ -12,6 +12,7 @@ import {
 } from "framer-motion";
 import { wrap } from "@motionone/utils";
 import { updateCursor } from "@/tanstack-client";
+import { useTranslations } from 'next-intl';
 
 interface ParallaxProps {
   children: string;
@@ -76,6 +77,8 @@ function ParallaxText({ children, baseVelocity = 100 }: ParallaxProps) {
 }
 
 export default function TextParallax() {
+  const t = useTranslations('parallax');
+  
   const onEnter = () => {
     updateCursor("carriage");
   };
@@ -90,9 +93,9 @@ export default function TextParallax() {
       className="my-10 text-7xl font-thin"
     >
       <ParallaxText baseVelocity={-5}>
-        Микроэлементы: N, P, K, Fe, Ca, Mg
+        {t('microelements')}
       </ParallaxText>
-      <ParallaxText baseVelocity={5}>Витамины: А, E, B2, В5, В12</ParallaxText>
+      <ParallaxText baseVelocity={5}>{t('vitamins')}</ParallaxText>
     </section>
   );
 }
